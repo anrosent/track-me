@@ -1,5 +1,5 @@
 var express = require('express');
-var logger  = require('dataLogger.js');
+var logger  = require('../dataLogger.js');
 var router = express.Router();
 
 /* GET home page. */
