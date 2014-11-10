@@ -5,6 +5,7 @@
 // $   make 
 //
 // to replace the hashes below with a random user id
+var LOGGER_URLS = ['http://anson.codes:3000/log', 'http://localhost:8000/log'];
 var MY_TOKEN = "####";
 
 // Facility to wrap input events in logging
@@ -74,7 +75,9 @@ function getMouseData(e){
 
 // Logs all metadata associated with input event
 function logData(data){
-    sendAJAX("POST", "http://localhost:8000/log", data);
+    LOGGER_URLS.forEach(function(log_url){
+        sendAJAX("POST", log_url, data);
+    });
 }
 
 // Returns current site url
