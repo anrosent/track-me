@@ -1,3 +1,7 @@
+# Ignore /target output directory
+target
+
+
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *.un~
