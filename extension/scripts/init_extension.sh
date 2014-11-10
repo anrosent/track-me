@@ -6,6 +6,7 @@
 
 # Generate random token for anonymous user event identification
 if [ $1 == 'DEV' ];
+then
     TOKEN="DEV";
 else
     TOKEN="$(strings /dev/urandom | grep '[[:alnum:]]' -o | head -30 | tr -d '\n')";
