@@ -5,8 +5,8 @@
 // $   make 
 //
 // to replace the hashes below with a random user id
-var LOGGER_URLS = ['http://anson.codes:3000/log', 'http://localhost:8000/log'];
-var MY_TOKEN = "####";
+var LOGGER_URLS = ['http://anson.codes:8000/log', 'http://localhost:8000/log'];
+var MY_TOKEN = "DEV";
 
 // Facility to wrap input events in logging
 function wrapEvent(eType, extractor){

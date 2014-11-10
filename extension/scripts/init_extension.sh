@@ -5,7 +5,12 @@
 #
 
 # Generate random token for anonymous user event identification
-TOKEN="$(strings /dev/urandom | grep '[[:alnum:]]' -o | head -30 | tr -d '\n')";
+if [ $1 == 'DEV' ];
+    TOKEN="DEV";
+else
+    TOKEN="$(strings /dev/urandom | grep '[[:alnum:]]' -o | head -30 | tr -d '\n')";
+fi
+
 echo "Generated token: $TOKEN"
 
 # Replace placeholder in injected content script with your generated token
