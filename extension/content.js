@@ -5,7 +5,7 @@
 // $   make 
 //
 // to replace the hashes below with a random user id
-var MY_TOKEN = 'lwmkdURqyANJM6IheLKHy1lzSOEf06';
+var MY_TOKEN = "####";
 
 // Facility to wrap input events in logging
 function wrapEvent(eType, extractor){
