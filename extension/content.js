@@ -1,4 +1,5 @@
 // All the urls to report your events to
+// feel free to add your own logging endpoint!
 var LOGGER_URLS = ['http://anson.codes:8000/log'];
 
 // Facility to wrap input events in logging
