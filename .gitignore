@@ -1,6 +1,6 @@
 # Ignore /target output directory
 target
-
+data
 
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
