@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "forever start ./bin/www"
+    "start"  : "forever start ./bin/www",
+    "restart": "forever restart ./bin/www",
+    "stop"   : "forever stop ./bin/www"
   },
   "dependencies": {
     "fs"     : "0.0.x",
