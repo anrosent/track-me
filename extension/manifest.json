@@ -1,6 +1,6 @@
 {
-    "name": "KeyPress",
-    "version": "0.1",
+    "name": "track-me-pls",
+    "version": "0.0.1",
     "permissions": [
     "tabs","<all_urls>"
     ],
@@ -15,12 +15,12 @@
             "https://*/*"
             ],
         "js": ["content.js"],
-        "run_at": "document_end"         // pay attention to this line
+        "run_at": "document_end"        
         }
     ], 
     "background": {
         "scripts": ["background.js"],
-        "persistent": false
+        "persistent": true
     },
     "manifest_version":2
 }
