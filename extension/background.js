@@ -47,6 +47,9 @@ function sendAJAX(method, data, callback) {
     // Add your token to reported data
     data.token = MY_TOKEN;
 
+    // v2 started at addition of page load and tab switches
+    data.version = 2;
+
     var xhttp = new XMLHttpRequest();
     var method = method ? method : 'GET';
 
