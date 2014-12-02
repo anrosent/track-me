@@ -1,6 +1,7 @@
 // Generate session token - all your input events will be tagged with this
 var MY_TOKEN = generateToken(2);
 
+var LOGGER_URLS = ['http://localhost:8000/log']
 
 /**
  * Possible parameters for request:
@@ -11,29 +12,24 @@ var MY_TOKEN = generateToken(2);
  *
  * The callback function is called upon completion of the request */
 chrome.runtime.onMessage.addListener(function(request, sender, callback) {
-    console.log('sending AJAX');
-    if (request.action == "xhttp") {
-        // Add your token to reported data
-        request.data.token = MY_TOKEN;
+    if (request.action == 'xhttp')
+        sendAJAX(request.method.toUpperCase(), request.data, callback);
+});
 
-        var xhttp = new XMLHttpRequest();
-        var method = request.method ? request.method.toUpperCase() : 'GET';
 
-        xhttp.onload = function() {
-            callback(xhttp.responseText);
-        };
-        xhttp.onerror = function() {
-            // Do whatever you want on error. Don't forget to invoke the
-            // callback to clean up the communication port.
-            callback();
-        };
-        xhttp.open(method, request.url, true);
-        if (method == 'POST') {
-            xhttp.setRequestHeader('Content-Type', 'application/json');
-        }
-        xhttp.send(JSON.stringify(request.data));
-        return true; // prevents the callback from being called too early on return
-    }
+/*
+ *  Set to fire AJAX request once Tab focus changes
+ *
+ */
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+    chrome.tabs.getSelected(null, function(tab){
+        sendAJAX('POST', {
+            eventType: 'tabSwitch',
+            url: tab.url,
+            time: Date.now(),
+            eventData: {}
+        }, function(){}); 
+    });
 });
 
 function generateToken(n){
@@ -42,4 +38,32 @@ function generateToken(n){
         token += Math.random().toString(36).replace(/[^a-z]+/g, '');
     }
     return token;
+}
+
+/*
+ * Send AJAX request from background
+ */
+function sendAJAX(method, data, callback) {
+    // Add your token to reported data
+    data.token = MY_TOKEN;
+
+    var xhttp = new XMLHttpRequest();
+    var method = method ? method : 'GET';
+
+    xhttp.onload = function() {
+        callback(xhttp.responseText);
+    };
+    xhttp.onerror = function() {
+        // Do whatever you want on error. Don't forget to invoke the
+        // callback to clean up the communication port.
+        callback();
+    };
+    LOGGER_URLS.forEach(function(url){
+        xhttp.open(method, url, true);
+        if (method == 'POST') {
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+        }
+        xhttp.send(JSON.stringify(data));
+    });
+    return true; // prevents the callback from being called too early on return
 }

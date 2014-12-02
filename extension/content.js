@@ -1,6 +1,10 @@
-// All the urls to report your events to
-// feel free to add your own logging endpoint!
-var LOGGER_URLS = ['http://anson.codes:8000/log'];
+// Fire off AJAX request to log page load
+/*
+ * window.addEventListener('load', function(e){
+    console.log('LOADED');
+    logEvent(e, function(e){return {}});
+});
+*/
 
 // Facility to wrap input events in logging
 function wrapEvent(eType, extractor){
@@ -68,9 +72,7 @@ function getMouseData(e){
 
 // Logs all metadata associated with input event
 function logData(data){
-    LOGGER_URLS.forEach(function(log_url){
-        sendAJAX("POST", log_url, data);
-    });
+    sendAJAX("POST", data);
 }
 
 // Returns current site url
@@ -79,12 +81,16 @@ function getUrl(){
 }
 
 // Sends message to background to fire AJAX logging request
-function sendAJAX(type, url, data){
-    console.log("sending to runtime");
+function sendAJAX(type, data){
     chrome.runtime.sendMessage({
         method: type,
         action: 'xhttp',
-        url: url,
         data: data,
     }); // no response handler; don't care
 }
+
+// Fire off immediately
+logEvent({
+    timestamp: Date.now(), 
+    type: 'load',
+}, function(e){return {}});
