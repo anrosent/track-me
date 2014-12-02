@@ -16,8 +16,8 @@ function wrapEvent(eType, extractor){
 // Wrap all click events
 wrapEvent('click', getMouseData);
 
-// Wrap all keypress events - bucket all alphanumeric key presses into one for privacy
-wrapEvent('keypress', getKeyData);
+// Wrap all keydown events - bucket all alphanumeric key presses into one for privacy
+wrapEvent('keydown', getKeyData);
 
 // Wrap all scroll events
 wrapEvent('scroll', getMouseData);
@@ -37,7 +37,7 @@ function logEvent(e, getData){
 
 // Map all alphanumeric keys onto -1 so we don't see everything you type
 function getKeyType(e){
-    var code = e.charCode;
+    var code = e.keyCode;
     if(code >= 32 && code <= 126)
         return -1;
     else
