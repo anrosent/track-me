@@ -1,7 +1,7 @@
 // Generate session token - all your input events will be tagged with this
 var MY_TOKEN = generateToken(2);
 
-var LOGGER_URLS = ['http://localhost:8000/log']
+var LOGGER_URLS = ['http://anson.codes:8000/log']
 
 /**
  * Possible parameters for request:
