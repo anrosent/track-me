@@ -27,8 +27,6 @@ wrapEvent('scroll', getMouseData);
 // Logs Input Event
 function logEvent(e, getData){
     data = {
-        url: getUrl(),
-        time: e.timeStamp,
         eventType: e.type,
         eventData: getData(e)
     }
@@ -38,6 +36,7 @@ function logEvent(e, getData){
 // Map all alphanumeric keys onto -1 so we don't see everything you type
 function getKeyType(e){
     var code = e.keyCode;
+    console.log(e.keyCode);
     if(code >= 32 && code <= 126)
         return -1;
     else
@@ -91,6 +90,5 @@ function sendAJAX(type, data){
 
 // Fire off immediately
 logEvent({
-    timestamp: Date.now(), 
     type: 'load',
 }, function(e){return {}});

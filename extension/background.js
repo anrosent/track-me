@@ -12,25 +12,39 @@ var LOGGER_URLS = ['http://anson.codes:8000/log']
  *
  * The callback function is called upon completion of the request */
 chrome.runtime.onMessage.addListener(function(request, sender, callback) {
-    if (request.action == 'xhttp')
-        sendAJAX(request.method.toUpperCase(), request.data, callback);
+    if (request.action == 'xhttp'){
+        
+        // Get event data from sender
+        var data = request.data;
+
+        // Fill in metadata
+        data.url = sender.url;
+        data.time = Date.now();
+        data.tabId = sender.tab.id;
+        data.windowId = sender.tab.windowId;
+
+        sendAJAX(request.method.toUpperCase(), data, callback);
+    }
 });
 
 
 /*
  *  Set to fire AJAX request once Tab focus changes
  *
- */
 chrome.tabs.onActivated.addListener(function(activeInfo) {
+    reportTabFocusChange('tabSwitch');
+});
+
+function reportTabFocusChange(t){
     chrome.tabs.getSelected(null, function(tab){
         sendAJAX('POST', {
-            eventType: 'tabSwitch',
-            url: tab.url,
-            time: Date.now(),
+            eventType: t,
             eventData: {}
         }, function(){}); 
     });
-});
+}
+ */
+
 
 function generateToken(n){
     var token = "";
@@ -43,15 +57,15 @@ function generateToken(n){
 /*
  * Send AJAX request from background
  */
-function sendAJAX(method, data, callback) {
+function sendAJAX(the_method, data, callback) {
     // Add your token to reported data
     data.token = MY_TOKEN;
 
     // v2 started at addition of page load and tab switches
-    data.version = 2;
+    data.version = 4;
 
     var xhttp = new XMLHttpRequest();
-    var method = method ? method : 'GET';
+    var method = the_method ? the_method : 'GET';
 
     xhttp.onload = function() {
         callback(xhttp.responseText);
