@@ -1,6 +1,6 @@
 {
     "name": "track-me-pls",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "permissions": [
     "tabs","<all_urls>"
     ],

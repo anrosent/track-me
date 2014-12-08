@@ -36,7 +36,6 @@ function logEvent(e, getData){
 // Map all alphanumeric keys onto -1 so we don't see everything you type
 function getKeyType(e){
     var code = e.keyCode;
-    console.log(e.keyCode);
     if(code >= 32 && code <= 126)
         return -1;
     else
